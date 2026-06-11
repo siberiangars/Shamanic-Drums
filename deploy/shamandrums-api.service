@@ -1,0 +1,19 @@
+# /etc/systemd/system/shamandrums-api.service
+[Unit]
+Description=Shaman Drums leads API (Fastify)
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/shamandrums
+EnvironmentFile=/var/www/shamandrums/server/.env
+ExecStart=/usr/bin/node server/index.mjs
+Restart=always
+RestartSec=3
+User=www-data
+Group=www-data
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

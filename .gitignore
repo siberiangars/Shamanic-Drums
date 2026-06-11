@@ -1,0 +1,48 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-backend
+dist-ssr
+*.local
+.playwright-mcp/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p8
+secrets/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# PHP secrets
+php/api/config.php
+
+# build/upload artifacts
+_upload/
+shamandrums-upload.zip
+
+# deploy/build bundles (артефакты)
+*.zip
+
+# случайные скриншоты в корне
+/*.png

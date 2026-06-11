@@ -1,0 +1,43 @@
+# Дух Сибири — статика + PHP-API + чистые URL с пре-рендером (reg.ru, Apache)
+
+AddDefaultCharset utf-8
+
+RewriteEngine On
+
+# Принудительный HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# API заявок
+RewriteRule ^api/leads/?$ api/leads.php [L]
+
+# Чистые URL страниц -> пре-рендеренные HTML
+RewriteRule ^drums/?$ drums.html [L]
+RewriteRule ^shop/?$ shop.html [L]
+RewriteRule ^practices/?$ practices.html [L]
+RewriteRule ^master/?$ master.html [L]
+RewriteRule ^contacts/?$ contacts.html [L]
+RewriteRule ^privacy/?$ privacy.html [L]
+RewriteRule ^cookies/?$ cookies.html [L]
+
+# Реальные файлы и папки (assets, generated, robots.txt, sitemap.xml, *.html) — отдаём как есть
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Всё остальное (неизвестный путь) -> SPA-приложение
+RewriteRule ^ index.html [L]
+
+# Кэш ассетов
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 30 days"
+  ExpiresByType application/javascript "access plus 30 days"
+  ExpiresByType image/webp "access plus 7 days"
+</IfModule>
+
+# Защита конфига
+<Files "config.php">
+  Require all denied
+</Files>
